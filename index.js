@@ -7,18 +7,12 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-/*const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Jarrito1409',
-    database: 'harry_potter_db',
-});*/
-
 const connection = mysql.createConnection({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
-    database: process.env.MYQSLDATABASE,
+    database: process.env.MYSQLDATABASE,
+    port: process.env.MYSQLPORT || 3306,
 });
 
 connection.connect(err => {
@@ -29,30 +23,13 @@ connection.connect(err => {
     console.log('Connected to MySQL database.');
 });
 
-// Conexión a la base de datos
-/*db.connect(err => {
-    if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-        return;
-    }
-    console.log('Conexión exitosa a la base de datos');
-});*/
-
 // Rutas
 app.post('/personajes', (req, res) => {
     const { nombre, casa, descripcion, rol } = req.body;
     const query = 'INSERT INTO personajes (nombre, casa, descripcion, rol) VALUES (?, ?, ?, ?)';
-    db.query(query, [id, nombre, casa, descripcion, rol], (err) => {
+    connection.query(query, [nombre, casa, descripcion, rol], (err) => {
         if (err) return res.status(500).send({ message: 'Error al insertar personaje' });
         res.send({ message: 'Personaje insertado exitosamente' });
-    });
-});
-
-app.get('/personajes', (req, res) => {
-    const query = 'SELECT * FROM personajes';
-    db.query(query, (err, results) => {
-        if (err) return res.status(500).send({ message: 'Error al obtener personajes' });
-        res.send({ data: results });
     });
 });
 
@@ -66,7 +43,7 @@ app.get('/personajes', (req, res) => {
 
     const params = id ? [id] : []; // Parámetros de la consulta, solo se usa el ID si es necesario.
 
-    db.query(query, params, (err, results) => {
+    connection.query(query, params, (err, results) => {
         if (err) {
             return res.status(500).send({ message: 'Error al obtener personajes' });
         }
@@ -86,7 +63,7 @@ app.delete('/personajes', (req, res) => {
         return res.status(400).send({ message: 'El ID es obligatorio para eliminar un personaje' });
     }
     const query = 'DELETE FROM personajes WHERE id = ?';
-    db.query(query, [id], (err, results) => {
+    connection.query(query, [id], (err, results) => {
         if (err) {
             return res.status(500).send({ message: 'Error al eliminar personaje' });
         }
@@ -140,7 +117,7 @@ app.patch('/personajes/:id', (req, res) => {
     const query = `UPDATE personajes SET ${fields.join(', ')} WHERE id = ?`;
 
     // Ejecutar la consulta
-    db.query(query, values, (err, results) => {
+    connection.query(query, values, (err, results) => {
         if (err) {
             return res.status(500).send({ message: 'Error al actualizar el personaje' });
         }
@@ -185,7 +162,7 @@ app.post('/personajes/formato', (req, res) => {
 });
 
 // Inicia el servidor
-const PORT = process.env.MYSQLPORT || 3000;
+const PORT = process.env.PORT || 3000; 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
