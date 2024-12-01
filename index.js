@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
-    database: process.env.MYQSLDATABASE
+    database: process.env.MYQSLDATABASE,
 });
 
 connection.connect(err => {
@@ -186,7 +186,7 @@ app.post('/personajes/formato', (req, res) => {
 });
 
 // Inicia el servidor
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.MYSQLPORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
