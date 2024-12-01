@@ -4,11 +4,12 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const corsOptions = {
+/*const corsOptions = {
     origin: 'https://leysly-mendoza.github.io', // Asegúrate de que esta URL esté correcta
     methods: 'GET,POST,PUT,DELETE,PATCH',
     allowedHeaders: 'Content-Type,Authorization',
-};
+};*/
+//app.use(cors(corsOptions));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
