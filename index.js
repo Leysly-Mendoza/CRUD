@@ -16,24 +16,32 @@ app.use(bodyParser.json());
 
 const mysql = require('mysql2');
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
+});
+
+connection.connect(err => {
+    if (err) {
+        console.error('Database connection failed:', err);
+        return;
+    }
+    console.log('Connected to MySQL database.');
 });
 
 // Conexión a la base de datos
-db.connect(err => {
+/*db.connect(err => {
     if (err) {
         console.error('Error al conectar a la base de datos:', err);
         return;
     }
     console.log('Conexión exitosa a la base de datos');
-});
+});*/
 
 // Rutas
 app.post('/personajes', (req, res) => {
-    const {nombre, casa, descripcion, rol } = req.body;
+    const { nombre, casa, descripcion, rol } = req.body;
     const query = 'INSERT INTO personajes (nombre, casa, descripcion, rol) VALUES (?, ?, ?, ?)';
     db.query(query, [id, nombre, casa, descripcion, rol], (err) => {
         if (err) return res.status(500).send({ message: 'Error al insertar personaje' });
