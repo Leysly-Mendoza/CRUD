@@ -162,7 +162,7 @@ app.post('/personajes/formato', (req, res) => {
 });
 
 // Inicia el servidor
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 1000; 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
