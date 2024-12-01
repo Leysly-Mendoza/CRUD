@@ -7,13 +7,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const connection = mysql.createConnection({
-    host: process.env.MYSQLHOST,
-    user: process.env.MYSQLUSER,
-    password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQLDATABASE,
-    port: process.env.MYSQLPORT || 3306,
-});
+const connection = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
 
 connection.connect(err => {
     if (err) {
