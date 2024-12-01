@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-app.use(cors({ origin: 'https://leysly-mendoza.github.io/FRONTEND/',}));
+app.use(cors({ origin: 'https://leysly-mendoza.github.io',}));
 app.use(bodyParser.json());
 
 const connection = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
