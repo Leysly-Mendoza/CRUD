@@ -4,7 +4,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-app.use(cors({ origin: 'https://leysly-mendoza.github.io',}));
+// Configura el origen permitido
+const corsOptions = {
+    origin: 'https://leysly-mendoza.github.io', // Cambia al origen de tu frontend
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type,Authorization',
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 const connection = mysql.createConnection(process.env.MYSQL_PUBLIC_URL);
