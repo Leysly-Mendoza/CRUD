@@ -14,7 +14,6 @@ app.use(bodyParser.json());
     database: 'harry_potter_db',
 });*/
 
-const mysql = require('mysql2');
 const connection = mysql.createConnection({
     host: process.env.MYSQLHOST,
     user: process.env.MYSQLUSER,
