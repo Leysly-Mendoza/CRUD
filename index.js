@@ -4,13 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-// Configura el origen permitido
 const corsOptions = {
-    origin: 'https://leysly-mendoza.github.io', // Cambia al origen de tu frontend
-    methods: 'GET,POST,PUT,DELETE',
+    origin: 'https://leysly-mendoza.github.io', // Asegúrate de que esta URL esté correcta
+    methods: 'GET,POST,PUT,DELETE,PATCH',
     allowedHeaders: 'Content-Type,Authorization',
 };
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
@@ -25,7 +23,7 @@ connection.connect(err => {
 });
 
 // Rutas
-app.post('/', (req, res) => {
+app.post('/personajes', (req, res) => {
     const { nombre, casa, descripcion, rol } = req.body;
     const query = 'INSERT INTO personajes (nombre, casa, descripcion, rol) VALUES (?, ?, ?, ?)';
     connection.query(query, [nombre, casa, descripcion, rol], (err) => {
@@ -34,7 +32,7 @@ app.post('/', (req, res) => {
     });
 });
 
-app.get('/:id', (req, res) => {
+app.get('/personajes', (req, res) => {
     const { id } = req.query;
 
     // Si se proporciona un ID, se filtra por ese ID; de lo contrario, se devuelven todos los personajes.
@@ -58,7 +56,7 @@ app.get('/:id', (req, res) => {
     });
 });
 
-app.delete('/:id', (req, res) => {
+app.delete('/personajes', (req, res) => {
     const { id } = req.query; // Obtener el ID desde la query string
     if (!id) {
         return res.status(400).send({ message: 'El ID es obligatorio para eliminar un personaje' });
@@ -76,7 +74,7 @@ app.delete('/:id', (req, res) => {
     });
 });
 
-app.patch('/:id', (req, res) => {
+app.patch('/personajes/:id', (req, res) => {
     const { id } = req.params; // Obtener el ID del personaje desde los parámetros de la ruta
     const { nombre, casa, descripcion, rol } = req.body; // Obtener los datos enviados en el cuerpo de la solicitud
 
@@ -134,7 +132,7 @@ app.patch('/:id', (req, res) => {
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
-app.post('/formato', (req, res) => {
+app.post('/personajes/formato', (req, res) => {
     const { id, nombre, casa, descripcion, rol } = req.body;
 
     // Validar que todos los datos estén presentes
