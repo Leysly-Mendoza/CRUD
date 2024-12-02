@@ -24,22 +24,22 @@ connection.connect(err => {
 });
 
 // Rutas
-app.post('/personajes', (req, res) => {
+app.post('/Personajes', (req, res) => {
     const { nombre, casa, descripcion, rol } = req.body;
-    const query = 'INSERT INTO personajes (nombre, casa, descripcion, rol) VALUES (?, ?, ?, ?)';
+    const query = 'INSERT INTO Personajes (nombre, casa, descripcion, rol) VALUES (?, ?, ?, ?)';
     connection.query(query, [nombre, casa, descripcion, rol], (err) => {
         if (err) return res.status(500).send({ message: 'Error al insertar personaje' });
         res.send({ message: 'Personaje insertado exitosamente' });
     });
 });
 
-app.get('/personajes', (req, res) => {
+app.get('/Personajes', (req, res) => {
     const { id } = req.query;
 
     // Si se proporciona un ID, se filtra por ese ID; de lo contrario, se devuelven todos los personajes.
     const query = id
-        ? 'SELECT * FROM personajes WHERE id = ?'
-        : 'SELECT * FROM personajes';
+        ? 'SELECT * FROM Personajes WHERE id = ?'
+        : 'SELECT * FROM Personajes';
 
     const params = id ? [id] : []; // Parámetros de la consulta, solo se usa el ID si es necesario.
 
@@ -57,12 +57,12 @@ app.get('/personajes', (req, res) => {
     });
 });
 
-app.delete('/personajes', (req, res) => {
+app.delete('/Personajes', (req, res) => {
     const { id } = req.query; // Obtener el ID desde la query string
     if (!id) {
         return res.status(400).send({ message: 'El ID es obligatorio para eliminar un personaje' });
     }
-    const query = 'DELETE FROM personajes WHERE id = ?';
+    const query = 'DELETE FROM Personajes WHERE id = ?';
     connection.query(query, [id], (err, results) => {
         if (err) {
             return res.status(500).send({ message: 'Error al eliminar personaje' });
@@ -75,7 +75,7 @@ app.delete('/personajes', (req, res) => {
     });
 });
 
-app.patch('/personajes/:id', (req, res) => {
+app.patch('/Personajes/:id', (req, res) => {
     const { id } = req.params; // Obtener el ID del personaje desde los parámetros de la ruta
     const { nombre, casa, descripcion, rol } = req.body; // Obtener los datos enviados en el cuerpo de la solicitud
 
@@ -114,7 +114,7 @@ app.patch('/personajes/:id', (req, res) => {
     values.push(id);
 
     // Generar la consulta SQL dinámica
-    const query = `UPDATE personajes SET ${fields.join(', ')} WHERE id = ?`;
+    const query = `UPDATE Personajes SET ${fields.join(', ')} WHERE id = ?`;
 
     // Ejecutar la consulta
     connection.query(query, values, (err, results) => {
@@ -133,7 +133,7 @@ app.patch('/personajes/:id', (req, res) => {
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
-app.post('/personajes/formato', (req, res) => {
+app.post('/Personajes/formato', (req, res) => {
     const { id, nombre, casa, descripcion, rol } = req.body;
 
     // Validar que todos los datos estén presentes
