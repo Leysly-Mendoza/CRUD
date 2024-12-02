@@ -33,7 +33,7 @@ app.post('/Personajes', (req, res) => {
     });
 });
 
-app.get('/Personajes', (req, res) => {
+app.get('/Personajes/:id', (req, res) => {
     const { id } = req.query;
 
     // Si se proporciona un ID, se filtra por ese ID; de lo contrario, se devuelven todos los personajes.
@@ -57,7 +57,7 @@ app.get('/Personajes', (req, res) => {
     });
 });
 
-app.delete('/Personajes', (req, res) => {
+app.delete('/Personajes/:id', (req, res) => {
     const { id } = req.query; // Obtener el ID desde la query string
     if (!id) {
         return res.status(400).send({ message: 'El ID es obligatorio para eliminar un personaje' });
