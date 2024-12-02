@@ -57,7 +57,7 @@ app.get('/Personajes/:id', (req, res) => {
     });
 });
 
-app.get('/Personajes/', (req, res) => {
+app.get('/Personajes/formato', (req, res) => {
          'SELECT * FROM Personajes';
     connection.query(query, params, (err, results) => {
         if (err) {
@@ -149,7 +149,7 @@ app.patch('/Personajes/:id', (req, res) => {
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
-app.post('/Personajes/formato', (req, res) => {
+app.post('/Personajes/pdf', (req, res) => {
     const { id, nombre, casa, descripcion, rol } = req.body;
 
     // Validar que todos los datos estén presentes
