@@ -73,7 +73,7 @@ app.get('/Personajes/formato', (req, res) => {
     });
 });
 
-app.delete('/Personajes/:id', (req, res) => {
+app.delete('/Personajes/', (req, res) => {
     const { id } = req.query; // Obtener el ID desde la query string
     if (!id) {
         return res.status(400).send({ message: 'El ID es obligatorio para eliminar un personaje' });
