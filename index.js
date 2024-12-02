@@ -57,6 +57,22 @@ app.get('/Personajes/:id', (req, res) => {
     });
 });
 
+app.get('/Personajes/', (req, res) => {
+         'SELECT * FROM Personajes';
+    connection.query(query, params, (err, results) => {
+        if (err) {
+            return res.status(500).send({ message: 'Error al obtener personajes' });
+        }
+
+        // Si no se encontró ningún resultado para el ID proporcionado
+        if (id && results.length === 0) {
+            return res.status(404).send({ message: 'Personaje no encontrado' });
+        }
+
+        res.send({ data: results });
+    });
+});
+
 app.delete('/Personajes/:id', (req, res) => {
     const { id } = req.query; // Obtener el ID desde la query string
     if (!id) {
